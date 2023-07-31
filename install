@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+cat "${SCRIPT_DIR}/bashrc" >> $HOME/.bashrc
+
+ln -sf $HOME/.bashrc $HOME/.bash_profile

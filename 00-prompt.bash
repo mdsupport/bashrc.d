@@ -1,37 +1,31 @@
-# based on something I found on dotfiles.com years ago
-function color_prompt
-{
-    local none="\[\033[0m\]"
+# Ref : https://www.codeproject.com/Articles/5329247/How-to-Change-Text-Color-in-a-Linux-Terminal
+# Foreground Color - "\033[" + "<0 or 1, meaning normal or bold>;" + "<color code> + "m"
+function FG {
+  local HL=0
+  if [ "$1" == "b" ]
+  then
+    HL=1
+  fi
+  printf "\033[%d;%dm" $HL $2
+}
+# Background Color - "\033[" + "<color code>" + "m"
+function BG {
+  printf "\033[%dm" $1
+}
+# Local prompt
+function SET_PS12 {
+  # DarkRed on Yellow
+  local TXT='$(FG 0 31)$(BG 103)'
+  local RESET='$(BG 0)'
 
-    local black="\[\033[0;30m\]"
-    local dark_gray="\[\033[1;30m\]"
-    local blue="\[\033[0;34m\]"
-    local light_blue="\[\033[1;34m\]"
-    local green="\[\033[0;32m\]"
-    local light_green="\[\033[1;32m\]"
-    local cyan="\[\033[0;36m\]"
-    local light_cyan="\[\033[1;36m\]"
-    local red="\[\033[0;31m\]"
-    local light_red="\[\033[1;31m\]"
-    local purple="\[\033[0;35m\]"
-    local light_purple="\[\033[1;35m\]"
-    local brown="\[\033[0;33m\]"
-    local yellow="\[\033[1;33m\]"
-    local light_gray="\[\033[0;37m\]"
-    local white="\[\033[1;37m\]"
+  # Enhanced prompt elements
+  local PS_T="$TXT\t$RESET"
+  local PS_U="$TXT\u$RESET"
+  local PS_H="$TXT\h$RESET"
+  local PS_W="$TXT\w$RESET"
 
-    local current_tty=`tty | sed -e "s/\/dev\/\(.*\)/\1/"`
-
-    local u_color=$purple
-    id -u > /dev/null 2>&1 &&           #Cross-platform hack.
-        if [ `id -u` -eq 0 ] ; then
-            local u_color=$yellow
-        fi
-
-    PS1="$dark_gray> $current_tty $u_color\u$dark_gray@$u_color\h$dark_gray:$light_blue\w\n$dark_gray> $red\$? $cyan\t $green\! $yellow"'\$'"$none "
-
-    PS2="$dark_gray>$none "
-
+  PS1="$PS_T $PS_U@$PS_H $PS_W > "
+  PS2="Contd.$TXT->$RESET "
 }
 
-color_prompt
+SET_PS12

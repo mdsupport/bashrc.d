@@ -1,4 +1,4 @@
-# bash.d
+# bashrc.d
 Perform scripts upon each start of new session.
 
 ## Common uses
@@ -10,12 +10,12 @@ Perform scripts upon each start of new session.
 Each user can perform the following steps
 ```
 cd ~
-git clone https://github.com/mdsupport/bash.d.git .bash.d
-cd .bash.d
+git clone https://github.com/mdsupport/bashrc.d.git .bashrc.d
+cd .bashrc.d
 chmod u+x install
 ./install
 bash
 ```
 
 ## Configuration
-Install script modifies `.bashrc` to execute `.bash` files in `.bash.d` directory.
+Install script modifies `.bashrc` to execute `.bash` files in `.bashrc.d` directory.
